@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Styled Form with Validation</title>
+  <style>
+    /* Styles for the form */
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    .elementor-form {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .elementor-field-group {
+      margin-bottom: 20px;
+    }
+
+    .elementor-field-label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+    }
+
+    .elementor-field {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .elementor-field:focus {
+      border-color: #6ea3ff;
+    }
+
+    .elementor-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .elementor-button:hover {
+      background-color: #45a049;
+    }
+
+    /* Custom styling for the button */
+    .elementor-button span {
+      position: relative;
+    }
+
+    .elementor-button .elementor-button-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .elementor-button-text {
+      margin-left: 20px;
+    }
+
+    .error-message {
+      color: #ff0000;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<form class="elementor-form" method="post" action="#" name="New Form" onsubmit="return validateForm()">
+  <input type="hidden" name="post_id" value="56"/>
+  <input type="hidden" name="form_id" value="465badc"/>
+  <input type="hidden" name="referer_title" value=""/>
+  <input type="hidden" name="queried_id" value="56"/>
+  <div class="elementor-form-fields-wrapper elementor-labels-above">
+      <div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-name elementor-col-50">
+          <label for="form-field-name" class="elementor-field-label">Name</label>
+          <input size="1" type="text" name="form_fields[name]" id="form-field-name" class="elementor-field elementor-size-sm  elementor-field-textual" required>
+          <div id="error-name" class="error-message"></div>
+      </div>
+      <div class="elementor-field-type-email elementor-field-group elementor-column elementor-field-group-email elementor-col-50 elementor-field-required">
+          <label for="form-field-email" class="elementor-field-label">Email</label>
+          <input size="1" type="email" name="form_fields[email]" id="form-field-email" class="elementor-field elementor-size-sm  elementor-field-textual" required aria-required="true">
+          <div id="error-email" class="error-message"></div>
+      </div>
+      <div class="elementor-field-type-number elementor-field-group elementor-column elementor-field-group-field_af8262f elementor-col-50 elementor-field-required">
+          <label for="form-field-field_af8262f" class="elementor-field-label">Phone</label>
+          <input type="tel" name="form_fields[field_af8262f]" id="form-field-field_af8262f" class="elementor-field elementor-size-sm  elementor-field-textual" required aria-required="true" pattern="[0-9]{10}" maxlength="10">
+          <div id="error-phone" class="error-message"></div>
+      </div>
+      <div class="elementor-field-type-text elementor-field-group elementor-column elementor-field-group-field_ecceb8c elementor-col-50 elementor-field-required">
+          <label for="form-field-field_ecceb8c" class="elementor-field-label">What you need help with?</label>
+          <input size="1" type="text" name="form_fields[field_ecceb8c]" id="form-field-field_ecceb8c" class="elementor-field elementor-size-sm  elementor-field-textual" required aria-required="true">
+          <div id="error-help" class="error-message"></div>
+      </div>
+      <div class="elementor-field-type-textarea elementor-field-group elementor-column elementor-field-group-message elementor-col-100">
+          <label for="form-field-message" class="elementor-field-label">Message</label>
+          <textarea class="elementor-field-textual elementor-field  elementor-size-sm" name="form_fields[message]" id="form-field-message" rows="4"></textarea>
+      </div>
+      <div class="elementor-field-group elementor-column elementor-field-type-submit elementor-col-100 e-form__buttons">
+          <button type="submit" class="elementor-button elementor-size-sm">
+              <span>
+                  <span class="elementor-button-icon">🚀</span>
+                  <span class="elementor-button-text">Book Consultation Call</span>
+              </span>
+          </button>
+      </div>
+  </div>
+</form>
+
+<script>
+  function validateForm() {
+    var name = document.getElementById("form-field-name").value;
+    var email = document.getElementById("form-field-email").value;
+    var phone = document.getElementById("form-field-field_af8262f").value;
+    var help = document.getElementById("form-field-field_ecceb8c").value;
+    var isValid = true;
+
+    // Reset error messages
+    document.getElementById("error-name").innerHTML = "";
+    document.getElementById("error-email").innerHTML = "";
+    document.getElementById("error-phone").innerHTML = "";
+    document.getElementById("error-help").innerHTML = "";
+
+    // Name validation
+    if (name.trim() == "") {
+      document.getElementById("error-name").innerHTML = "Name is required";
+      isValid = false;
+    }
+
+    // Email validation
+    if (email.trim() == "") {
+      document.getElementById("error-email").innerHTML = "Email is required";
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      document.getElementById("error-email").innerHTML = "Invalid email format";
+      isValid = false;
+    }
+
+    // Phone validation
+    if (phone.trim() == "") {
+      document.getElementById("error-phone").innerHTML = "Phone is required";
+      isValid = false;
+    } else if (!validatePhone(phone)) {
+      document.getElementById("error-phone").innerHTML = "Invalid phone number (must be 10 digits)";
+      isValid = false;
+    }
+
+    // Help validation
+    if (help.trim() == "") {
+      document.getElementById("error-help").innerHTML = "Please specify what you need help with";
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  // Email validation function
+  function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  // Phone validation function
+  function validatePhone(phone) {
+    var re = /^[0-9]{10}$/;
+    return re.test(phone);
+  }
+</script>
+
+</body>
+</html>
